@@ -1,0 +1,25 @@
+---
+version: "3.1"
+
+services:
+  server:
+    build: .
+    security_opt:
+      - label=disable
+    volumes:
+      - ./consul/server/:/etc/consul.d/
+      - ./nomad/server/:/etc/nomad.d/
+    ports:
+      - "4646:4646"
+
+  client:
+    build: .
+    security_opt:
+      - label=disable
+    volumes:
+      - ./consul/client/:/etc/consul.d/
+      - ./nomad/client/:/etc/nomad.d/
+    devices:
+      - /dev/fuse:/dev/fuse
+    depends_on:
+      - server

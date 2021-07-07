@@ -1,0 +1,14 @@
+[Unit]
+Description=Prepare Podman
+Wants=network-online.target
+After=network-online.target
+Before=nomad.service
+
+[Service]
+Type=oneshot
+ExecStartPre=chown podman:podman /home/podman/.local/share/containers
+ExecStartPre=loginctl enable-linger podman
+ExecStart=su - podman -c 'systemctl --user start podman'
+
+[Install]
+WantedBy=multi-user.target

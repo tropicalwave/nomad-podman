@@ -1,0 +1,10 @@
+{
+  "data_dir": "/opt/consul",
+  "server": false,
+  "retry_join": ["server:8301"],
+  "ports": {
+    "serf_lan": 18301,
+    "dns": 18600,
+    "http": 18500
+  }
+}
