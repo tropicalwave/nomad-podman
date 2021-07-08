@@ -5,7 +5,8 @@
 ## Introduction
 
 This is a test project to get used to nomad and consul
-with a podman driver.
+with a podman driver. After successful startup, one nomad
+server and three nomad clients will be up and running.
 
 ## Quickstart
 

@@ -13,12 +13,11 @@ services:
       - "4646:4646"
 
   client:
+    deploy:
+      replicas: 3
     build: .
     security_opt:
       - label=disable
-    volumes:
-      - ./consul/client/:/etc/consul.d/
-      - ./nomad/client/:/etc/nomad.d/
     devices:
       - /dev/fuse:/dev/fuse
     depends_on:

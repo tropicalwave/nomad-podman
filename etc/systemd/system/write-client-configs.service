@@ -1,0 +1,12 @@
+[Unit]
+Description=Write configurations on clients
+Wants=network-online.target
+After=network-online.target
+Before=nomad.service consul.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/local/write-client-configs.sh
+
+[Install]
+WantedBy=multi-user.target
