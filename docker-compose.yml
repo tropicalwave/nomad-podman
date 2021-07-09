@@ -7,7 +7,8 @@ services:
     security_opt:
       - label=disable
     volumes:
-      - ./shared/:/shared/
+      - ./shared/consul.key:/shared/consul.key:ro
+      - ./shared/nomad.key:/shared/nomad.key:ro
     ports:
       - "4646:4646"
 
@@ -20,6 +21,6 @@ services:
     devices:
       - /dev/fuse:/dev/fuse
     volumes:
-      - ./shared/:/shared/
+      - ./shared/consul.key:/shared/consul.key:ro
     depends_on:
       - server

@@ -5,7 +5,10 @@ set -u
 CONSUL_KEY="$(cat /shared/consul.key)"
 echo '# placeholder' >/etc/consul.d/consul.hcl
 
-if hostname -a | grep -q server; then
+if test -f /etc/consul.d/consul.json ; then
+    exit 0
+elif hostname -a | grep -q server; then
+    NOMAD_SERVER_KEY="$(cat /shared/nomad.key)"
     cat >/etc/consul.d/consul.json <<EOF
 {
   "data_dir": "/opt/consul",
@@ -22,6 +25,7 @@ data_dir = "/opt/nomad/data"
 server {
   enabled          = true
   bootstrap_expect = 1
+  encrypt = "$NOMAD_SERVER_KEY"
 }
 datacenter = "dc1"
 
@@ -29,15 +33,10 @@ consul {
   address = "127.0.0.1:8500"
 }
 EOF
+else
+    NUMBER="$(hostname -a | awk -F_ '{ print $NF }')"
 
-    exit 0
-elif test -f /etc/consul.d/consul.json ; then
-    exit 0
-fi
-
-NUMBER="$(hostname -a | awk -F_ '{ print $NF }')"
-
-cat >/etc/consul.d/consul.json <<EOF
+    cat >/etc/consul.d/consul.json <<EOF
 {
   "data_dir": "/opt/consul",
   "server": false,
@@ -53,7 +52,7 @@ cat >/etc/consul.d/consul.json <<EOF
 }
 EOF
 
-cat >/etc/nomad.d/nomad.hcl <<EOF
+    cat >/etc/nomad.d/nomad.hcl <<EOF
 data_dir = "/opt/nomad/data"
 
 server {
@@ -79,3 +78,9 @@ ports {
   http = $((4646+NUMBER*3))
 }
 EOF
+fi
+
+chown consul:consul -R /etc/consul.d
+chmod 640 /etc/consul.d/*
+chown podman:podman -R /etc/nomad.d
+chmod 640 /etc/nomad.d/*

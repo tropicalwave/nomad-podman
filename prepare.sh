@@ -9,3 +9,4 @@ fi
 
 mkdir shared/
 openssl rand -base64 32 >shared/consul.key
+openssl rand -base64 32 >shared/nomad.key
