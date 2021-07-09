@@ -7,8 +7,7 @@ services:
     security_opt:
       - label=disable
     volumes:
-      - ./consul/server/:/etc/consul.d/
-      - ./nomad/server/:/etc/nomad.d/
+      - ./shared/:/shared/
     ports:
       - "4646:4646"
 
@@ -20,5 +19,7 @@ services:
       - label=disable
     devices:
       - /dev/fuse:/dev/fuse
+    volumes:
+      - ./shared/:/shared/
     depends_on:
       - server

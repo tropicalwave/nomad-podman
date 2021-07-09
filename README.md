@@ -11,6 +11,7 @@ server and three nomad clients will be up and running.
 ## Quickstart
 
 ```bash
+./prepare.sh
 podman-compose up -d
 podman exec -ti podman-nomad_client_1 /bin/bash
 # nomad job run /examples/redis.nomad

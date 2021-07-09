@@ -23,9 +23,9 @@ RUN dnf -y install dnf-plugins-core && \
     chown podman:podman /opt/nomad/data
 COPY nomad/override.conf /etc/systemd/system/nomad.service.d/override.conf
 COPY etc/systemd/system/* /etc/systemd/system/
-COPY usr/bin/local/* /usr/bin/local/
+COPY usr/local/bin/* /usr/local/bin/
 RUN systemctl enable prepare-podman.service && \
-    systemctl enable write-client-configs.service
+    systemctl enable write-configs.service
 COPY examples/* /examples/
 
 CMD ["/sbin/init"]

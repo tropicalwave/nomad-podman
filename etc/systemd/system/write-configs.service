@@ -6,7 +6,7 @@ Before=nomad.service consul.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/local/write-client-configs.sh
+ExecStart=/usr/local/bin/write-configs.sh
 
 [Install]
 WantedBy=multi-user.target
