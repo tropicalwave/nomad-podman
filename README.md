@@ -18,3 +18,7 @@ podman exec -ti podman-nomad_client_1 /bin/bash
 ```
 
 Nomad can also be reached by browsing to <http://localhost:4646>
+
+## Overview
+
+![Architecture](/images/architecture.svg)
