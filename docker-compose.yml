@@ -18,8 +18,6 @@ services:
     build: .
     security_opt:
       - label=disable
-    devices:
-      - /dev/fuse:/dev/fuse
     volumes:
       - ./shared/consul.key:/shared/consul.key:ro
     depends_on:
