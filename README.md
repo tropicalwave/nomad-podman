@@ -34,13 +34,19 @@ podman exec -ti podman-nomad_client_1 /bin/bash
 
 Example taken from <https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik>
 
+Note: In this example, a webapp running on an arbitrary number of nodes
+is exposed to Traefik instances running on _all_ nomad client nodes. In a
+real-world scenario, an external load balancer would then forward network
+traffic to Traefik. However, since we are only using containers, an
+HAProxy process running on the nomad server plays the role of such an
+external load balancer. Therefore, one can reach two endpoints on the
+host machine after executing the below commands:
+
+* <http://localhost:8080/myapp> demo webapp)
+* <http://localhost:8081/> (Traefik dashboard)
+
 ```bash
 podman exec -ti podman-nomad_client_1 /bin/bash
 # nomad job run /examples/traefik.nomad
 # nomad job run /examples/demo-webapp.nomad
-
-# ALLOC="$(nomad job allocs -json traefik | jq -r .[].ID)"
-# IP="$(nomad alloc status -json "$ALLOC" | jq -r .AllocatedResources.Shared.Networks[].IP)"
-# curl "http://$IP:8080/myapp"
-
 ```
