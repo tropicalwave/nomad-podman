@@ -11,6 +11,8 @@ services:
       - ./shared/nomad.key:/shared/nomad.key:ro
     ports:
       - "4646:4646"
+      - "8080:8080"
+      - "8081:8081"
 
   client:
     deploy:

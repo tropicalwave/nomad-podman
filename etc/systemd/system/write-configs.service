@@ -2,7 +2,7 @@
 Description=Write configurations on clients
 Wants=network-online.target
 After=network-online.target
-Before=nomad.service consul.service
+Before=nomad.service consul.service haproxy.service
 
 [Service]
 Type=oneshot

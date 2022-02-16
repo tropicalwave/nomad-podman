@@ -13,12 +13,34 @@ server and three nomad clients will be up and running.
 ```bash
 ./prepare.sh
 podman-compose up -d
+```
+
+Nomad can then be reached by browsing to <http://localhost:4646>
+
+## Architecture
+
+![Architecture](/images/architecture.svg)
+
+## Starting jobs
+
+### Redis
+
+```bash
 podman exec -ti podman-nomad_client_1 /bin/bash
 # nomad job run /examples/redis.nomad
 ```
 
-Nomad can also be reached by browsing to <http://localhost:4646>
+### Traefik with web app
 
-## Overview
+Example taken from <https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik>
 
-![Architecture](/images/architecture.svg)
+```bash
+podman exec -ti podman-nomad_client_1 /bin/bash
+# nomad job run /examples/traefik.nomad
+# nomad job run /examples/demo-webapp.nomad
+
+# ALLOC="$(nomad job allocs -json traefik | jq -r .[].ID)"
+# IP="$(nomad alloc status -json "$ALLOC" | jq -r .AllocatedResources.Shared.Networks[].IP)"
+# curl "http://$IP:8080/myapp"
+
+```

@@ -10,6 +10,7 @@ touch /etc/consul.d/consul.env
 if test -f /etc/consul.d/consul.json ; then
     exit 0
 elif hostname -a | grep -q server; then
+    # Server configuration
     NOMAD_SERVER_KEY="$(cat /shared/nomad.key)"
     cat >/etc/consul.d/consul.json <<EOF
 {
@@ -35,7 +36,37 @@ consul {
   address = "127.0.0.1:8500"
 }
 EOF
+
+    cat >/etc/haproxy/haproxy.cfg <<EOF
+frontend http_front
+    bind *:8080
+    default_backend http_back
+    timeout connect 5000
+    timeout client 5000
+    timeout server 5000
+
+backend http_back
+    balance first
+    server-template traefik 1-10 _traefik._tcp.service.consul resolvers consul resolve-opts allow-dup-ip resolve-prefer ipv4 check
+
+frontend api_front
+    bind *:8081
+    default_backend api_back
+    timeout connect 5000
+    timeout client 5000
+    timeout server 5000
+
+backend api_back
+    balance first
+    server-template traefik-api 1-10 _traefik-api._tcp.service.consul resolvers consul resolve-opts allow-dup-ip resolve-prefer ipv4 check
+
+resolvers consul
+     nameserver consul 127.0.0.1:8600
+     accepted_payload_size 8192
+     hold valid 5s
+EOF
 else
+    # Client configuration
     cat >/etc/consul.d/consul.json <<EOF
 {
   "data_dir": "/opt/consul",
