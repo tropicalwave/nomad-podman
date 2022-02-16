@@ -42,7 +42,7 @@ HAProxy process running on the nomad server plays the role of such an
 external load balancer. Therefore, one can reach two endpoints on the
 host machine after executing the below commands:
 
-* <http://localhost:8080/myapp> demo webapp)
+* <http://localhost:8080/myapp> (demo webapp)
 * <http://localhost:8081/> (Traefik dashboard)
 
 ```bash
