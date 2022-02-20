@@ -44,7 +44,6 @@ job "demo-webapp" {
       config {
         image = "docker.io/nginx:stable-alpine"
         ports = ["http"]
-        network_mode = "host"
 
         volumes = [
           "local/default.conf.template:/etc/nginx/templates/default.conf.template",

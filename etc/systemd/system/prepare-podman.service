@@ -7,6 +7,7 @@ Before=nomad.service
 [Service]
 Type=oneshot
 ExecStartPre=chown podman:podman /home/podman/.local/share/containers
+ExecStartPre=su - podman -c "echo -e '[containers]\nvolumes = [\n\t\"/proc:/proc\",\n]\ndefault_sysctls = []' >~/.config/containers/containers.conf"
 ExecStartPre=loginctl enable-linger podman
 ExecStart=su - podman -c 'systemctl --user start podman'
 

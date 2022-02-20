@@ -20,6 +20,8 @@ services:
     build: .
     security_opt:
       - label=disable
+    devices:
+      - /dev/net/tun:/dev/net/tun
     volumes:
       - ./shared/consul.key:/shared/consul.key:ro
     depends_on:
