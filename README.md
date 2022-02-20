@@ -23,13 +23,6 @@ Nomad can then be reached by browsing to <http://localhost:4646>
 
 ## Starting jobs
 
-### Redis
-
-```bash
-podman exec -ti podman-nomad_client_1 /bin/bash
-# nomad job run /examples/redis.nomad
-```
-
 ### Traefik with web app
 
 Example taken from <https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik>
@@ -49,4 +42,14 @@ host machine after executing the below commands:
 podman exec -ti podman-nomad_client_1 /bin/bash
 # nomad job run /examples/traefik.nomad
 # nomad job run /examples/demo-webapp.nomad
+```
+
+### Service with Consul Connect native integration
+
+Example taken from <https://www.hashicorp.com/blog/consul-connect-native-tasks-in-hashicorp-nomad-0-12>
+
+```bash
+podman exec -ti podman-nomad_client_1 /bin/bash
+# consul config write /examples/connect/intention-config.hcl
+# nomad job run /examples/connect/native.nomad
 ```
