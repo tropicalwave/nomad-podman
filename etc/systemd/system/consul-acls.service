@@ -1,0 +1,12 @@
+[Unit]
+Description=Bootstrap Consul ACLs
+Wants=consul.service
+After=consul.service
+Before=nomad.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/consul-acls.sh
+
+[Install]
+WantedBy=multi-user.target

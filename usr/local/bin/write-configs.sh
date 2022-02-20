@@ -19,7 +19,13 @@ elif hostname -a | grep -q server; then
   "bootstrap": true,
   "encrypt": "$CONSUL_KEY",
   "encrypt_verify_incoming": true,
-  "encrypt_verify_outgoing": true
+  "encrypt_verify_outgoing": true,
+  "acl": {
+    "tokens": {
+      "initial_management": "$(cat /shared/consul-agents.token)",
+      "default": "$(cat /shared/consul-agents.token)"
+    }
+  }
 }
 EOF
     cat >/etc/nomad.d/nomad.hcl <<EOF
@@ -33,7 +39,8 @@ server {
 datacenter = "dc1"
 
 consul {
-  address = "127.0.0.1:8500"
+  allow_unauthenticated = false
+  token = "$(cat /shared/nomad-server.token)"
 }
 EOF
 
@@ -74,7 +81,12 @@ else
   "retry_join": ["server:8301"],
   "encrypt": "$CONSUL_KEY",
   "encrypt_verify_incoming": true,
-  "encrypt_verify_outgoing": true
+  "encrypt_verify_outgoing": true,
+  "acl": {
+    "tokens": {
+      "default": "$(cat /shared/consul-agents.token)"
+    }
+  }
 }
 EOF
 
@@ -95,8 +107,21 @@ plugin {
     enabled = true
   }
 }
+
+consul {
+  allow_unauthenticated = false
+  token = "$(cat /shared/nomad-client.token)"
+}
 EOF
 fi
+
+cat >/etc/consul.d/acl.hcl <<EOF
+acl = {
+  enabled = true
+  default_policy = "deny"
+  enable_token_persistence = true
+}
+EOF
 
 chown consul:consul -R /etc/consul.d
 chmod 640 /etc/consul.d/*
