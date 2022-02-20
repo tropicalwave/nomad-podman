@@ -25,6 +25,9 @@ elif hostname -a | grep -q server; then
       "initial_management": "$(cat /shared/consul-agents.token)",
       "default": "$(cat /shared/consul-agents.token)"
     }
+  },
+  "connect": {
+    "enabled": true
   }
 }
 EOF
