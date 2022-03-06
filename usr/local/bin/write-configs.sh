@@ -28,6 +28,10 @@ elif hostname -a | grep -q server; then
   },
   "connect": {
     "enabled": true
+  },
+  "client_addr": "0.0.0.0",
+  "ui_config": {
+    "enabled": true
   }
 }
 EOF

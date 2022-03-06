@@ -14,6 +14,7 @@ services:
       - ./shared/consul-agents.token:/shared/consul-agents.token:ro
     ports:
       - "4646:4646"
+      - "8500:8500"
       - "8080:8080"
       - "8081:8081"
 

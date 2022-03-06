@@ -15,7 +15,10 @@ server and three nomad clients will be up and running.
 podman-compose up -d
 ```
 
-Nomad can then be reached by browsing to <http://localhost:4646>
+The services can then be reached as follows:
+
+* Nomad: <http://localhost:4646>
+* Consul: <http://localhost:8500>
 
 ## Architecture
 
