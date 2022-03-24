@@ -42,7 +42,7 @@ host machine after executing the below commands:
 * <http://localhost:8081/> (Traefik dashboard)
 
 ```bash
-podman exec -ti podman-nomad_client_1 /bin/bash
+podman exec -ti nomad-podman_client_1 /bin/bash
 # nomad job run /examples/traefik.nomad
 # nomad job run /examples/demo-webapp.nomad
 ```
@@ -52,7 +52,7 @@ podman exec -ti podman-nomad_client_1 /bin/bash
 Example taken from <https://www.hashicorp.com/blog/consul-connect-native-tasks-in-hashicorp-nomad-0-12>
 
 ```bash
-podman exec -ti podman-nomad_client_1 /bin/bash
+podman exec -ti nomad-podman_client_1 /bin/bash
 # consul config write /examples/connect/intention-config.hcl
 # nomad job run /examples/connect/native.nomad
 ```
