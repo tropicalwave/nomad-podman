@@ -1,5 +1,5 @@
-FROM quay.io/podman/stable:v3.4.4
-ARG DRIVER_VERSION=0.3.0
+FROM quay.io/podman/stable:v4.1.1
+ARG DRIVER_VERSION=0.4.0
 ENV PODMAN_DRIVER nomad-driver-podman_${DRIVER_VERSION}_linux_amd64.zip
 RUN dnf -y install dnf-plugins-core && \
     dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo && \
@@ -9,11 +9,13 @@ RUN dnf -y install dnf-plugins-core && \
         consul \
         haproxy \
         hostname \
+        iproute \
         less \
         podman \
         podman-docker \
         procps-ng \
-        unzip && \
+        unzip \
+        util-linux && \
     dnf clean all && \
     systemctl enable podman.socket && \
     systemctl enable consul.service && \
