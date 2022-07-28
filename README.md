@@ -21,8 +21,8 @@ The services can then be reached as follows:
 * Consul: <http://localhost:8500>
 
 Hint: Since the configured default token in Consul only allows limited
-actions, login with the token created by `prepare.sh` at
-`shared/consul-agents.token`.
+actions, it is recommended to login with the token created by `prepare.sh`
+at `shared/consul-agents.token`.
 
 ## Architecture
 
