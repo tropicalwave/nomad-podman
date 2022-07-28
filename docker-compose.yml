@@ -12,6 +12,7 @@ services:
       - ./shared/nomad-server.token:/shared/nomad-server.token:ro
       - ./shared/nomad-client.token:/shared/nomad-client.token:ro
       - ./shared/consul-agents.token:/shared/consul-agents.token:ro
+      - ./shared/dns-requests.token:/shared/dns-requests.token:ro
     ports:
       - "4646:4646"
       - "8500:8500"
@@ -30,5 +31,6 @@ services:
       - ./shared/consul.key:/shared/consul.key:ro
       - ./shared/nomad-client.token:/shared/nomad-client.token:ro
       - ./shared/consul-agents.token:/shared/consul-agents.token:ro
+      - ./shared/dns-requests.token:/shared/dns-requests.token:ro
     depends_on:
       - server

@@ -23,7 +23,8 @@ elif hostname -a | grep -q server; then
   "acl": {
     "tokens": {
       "initial_management": "$(cat /shared/consul-agents.token)",
-      "default": "$(cat /shared/consul-agents.token)"
+      "default": "$(cat /shared/dns-requests.token)",
+      "agent": "$(cat /shared/consul-agents.token)"
     }
   },
   "connect": {
@@ -91,7 +92,8 @@ else
   "encrypt_verify_outgoing": true,
   "acl": {
     "tokens": {
-      "default": "$(cat /shared/consul-agents.token)"
+      "agent": "$(cat /shared/consul-agents.token)",
+      "default": "$(cat /shared/dns-requests.token)"
     }
   }
 }

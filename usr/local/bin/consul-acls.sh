@@ -15,6 +15,9 @@ EOF
     exit 0
 fi
 
+CONSUL_HTTP_TOKEN="$(cat /shared/consul-agents.token)"
+export CONSUL_HTTP_TOKEN
+
 while true; do
     consul operator raft list-peers | grep -q leader && break
     sleep 0.5
@@ -30,6 +33,10 @@ consul acl policy create \
   -description "Nomad Client Policy" \
   -rules @/etc/initial-acls/nomad-client-policy.hcl >/dev/null
 
+consul acl policy create \
+  -name "dns-requests" \
+  -rules @/etc/initial-acls/dns-request-policy.hcl >/dev/null
+
 consul acl token create \
   -description "Nomad Server Token" \
   -policy-name "nomad-server" \
@@ -40,6 +47,11 @@ consul acl token create \
   -description "Nomad Client Token" \
   -policy-name "nomad-client" \
   -secret="$(cat /shared/nomad-client.token)" >/dev/null
+
+consul acl token create \
+  -description "Token for DNS Requests" \
+  -policy-name dns-requests \
+  -secret="$(cat /shared/dns-requests.token)" >/dev/null
 
 cat >>~/.bashrc <<EOF
 

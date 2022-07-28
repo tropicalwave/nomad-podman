@@ -20,6 +20,10 @@ The services can then be reached as follows:
 * Nomad: <http://localhost:4646>
 * Consul: <http://localhost:8500>
 
+Hint: Since the configured default token in Consul only allows limited
+actions, login with the token created by `prepare.sh` at
+`shared/consul-agents.token`.
+
 ## Architecture
 
 ![Architecture](/images/architecture.svg)
