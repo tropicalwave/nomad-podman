@@ -22,7 +22,7 @@ The services can then be reached as follows:
 
 _Hints:_
 1. Since the configured default token in Consul only allows limited
-actions, it is recommended to login to the its web frontend with the
+actions, it is recommended to login to its web frontend with the
 token created by `prepare.sh` at `shared/consul-agents.token`.
 2. Although Nomad is deployed with ACLs enabled, it is deployed
 with a permissive anonymous policy. This would need to be changed
