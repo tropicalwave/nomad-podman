@@ -47,8 +47,16 @@ server {
 datacenter = "dc1"
 
 consul {
+  # Set to true to be able to submit jobs via Nomad's UI
   allow_unauthenticated = false
   token = "$(cat /shared/nomad-server.token)"
+}
+
+ui {
+  enabled = true
+  consul {
+    ui_url = "http://localhost:8500/ui"
+  }
 }
 EOF
 
