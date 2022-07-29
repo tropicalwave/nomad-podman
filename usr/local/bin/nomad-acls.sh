@@ -2,7 +2,7 @@
 set -e
 set -u
 
-if test -f /etc/nomad.d/bootstrapped -o hostname -a | grep -q client; then
+if test -f /etc/nomad.d/bootstrapped || hostname -a | grep -q client; then
     exit 0
 fi
 
