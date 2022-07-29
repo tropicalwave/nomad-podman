@@ -20,9 +20,13 @@ The services can then be reached as follows:
 * Nomad: <http://localhost:4646>
 * Consul: <http://localhost:8500>
 
-Hint: Since the configured default token in Consul only allows limited
-actions, it is recommended to login with the token created by `prepare.sh`
-at `shared/consul-agents.token`.
+_Hints:_
+1. Since the configured default token in Consul only allows limited
+actions, it is recommended to login to the its web frontend with the
+token created by `prepare.sh` at `shared/consul-agents.token`.
+2. Although Nomad is deployed with ACLs enabled, it is deployed
+with a permissive anonymous policy. This would need to be changed
+for production environments.
 
 ## Architecture
 

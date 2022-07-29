@@ -27,11 +27,12 @@ RUN dnf -y install dnf-plugins-core && \
     rm -f "/opt/nomad/data/plugins/$PODMAN_DRIVER" && \
     chown podman:podman /opt/nomad/data
 COPY nomad/override.conf /etc/systemd/system/nomad.service.d/override.conf
-COPY acls/*.hcl /etc/initial-acls/
+COPY acls/ /etc/initial-acls/
 COPY examples/ /examples/
 COPY etc/systemd/system/* /etc/systemd/system/
 RUN systemctl enable prepare-podman.service && \
     systemctl enable consul-acls.service && \
+    systemctl enable nomad-acls.service && \
     systemctl enable write-configs.service
 COPY usr/local/bin/* /usr/local/bin/
 

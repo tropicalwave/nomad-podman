@@ -1,0 +1,11 @@
+[Unit]
+Description=Bootstrap Nomad ACLs
+Wants=nomad.service
+After=nomad.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/nomad-acls.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -58,6 +58,10 @@ ui {
     ui_url = "http://localhost:8500/ui"
   }
 }
+
+acl {
+  enabled = true
+}
 EOF
 
     cat >/etc/haproxy/haproxy.cfg <<EOF
@@ -128,6 +132,10 @@ plugin {
 consul {
   allow_unauthenticated = false
   token = "$(cat /shared/nomad-client.token)"
+}
+
+acl {
+  enabled = true
 }
 EOF
 fi

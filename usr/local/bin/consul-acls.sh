@@ -26,16 +26,16 @@ done
 consul acl policy create \
   -name "nomad-server" \
   -description "Nomad Server Policy" \
-  -rules @/etc/initial-acls/nomad-server-policy.hcl >/dev/null
+  -rules @/etc/initial-acls/consul/nomad-server-policy.hcl >/dev/null
 
 consul acl policy create \
   -name "nomad-client" \
   -description "Nomad Client Policy" \
-  -rules @/etc/initial-acls/nomad-client-policy.hcl >/dev/null
+  -rules @/etc/initial-acls/consul/nomad-client-policy.hcl >/dev/null
 
 consul acl policy create \
   -name "dns-requests" \
-  -rules @/etc/initial-acls/dns-request-policy.hcl >/dev/null
+  -rules @/etc/initial-acls/consul/dns-request-policy.hcl >/dev/null
 
 consul acl token create \
   -description "Nomad Server Token" \
