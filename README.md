@@ -51,8 +51,8 @@ host machine after executing the below commands:
 
 ```bash
 podman exec -ti nomad-podman_client_1 /bin/bash
-# nomad job run /examples/traefik.nomad
-# nomad job run /examples/demo-webapp.nomad
+> nomad job run /examples/traefik.nomad
+> nomad job run /examples/demo-webapp.nomad
 ```
 
 ### Service with Consul Connect native integration
@@ -61,6 +61,11 @@ Example taken from <https://www.hashicorp.com/blog/consul-connect-native-tasks-i
 
 ```bash
 podman exec -ti nomad-podman_client_1 /bin/bash
-# consul config write /examples/connect/intention-config.hcl
-# nomad job run /examples/connect/native.nomad
+> consul config write /examples/connect/intention-config.hcl
+> nomad job run /examples/connect/native.nomad
+
+> # interact with webservice via curl
+> nomad status connect-native
+> nomad alloc status <allocation id of frontend as returned above>
+> curl http://<ip:port for http port allocation as returned above>
 ```
