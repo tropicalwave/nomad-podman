@@ -1,4 +1,4 @@
-FROM quay.io/podman/stable:v4.3.0
+FROM quay.io/podman/stable:v4.4.1
 ARG DRIVER_VERSION=0.4.1
 ENV PODMAN_DRIVER nomad-driver-podman_${DRIVER_VERSION}_linux_amd64.zip
 RUN dnf -y install dnf-plugins-core && \
