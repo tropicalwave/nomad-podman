@@ -1,5 +1,5 @@
-FROM quay.io/podman/stable:v4.4.1
-ARG DRIVER_VERSION=0.4.1
+FROM quay.io/podman/stable:v4.4.4
+ARG DRIVER_VERSION=0.4.2
 ENV PODMAN_DRIVER nomad-driver-podman_${DRIVER_VERSION}_linux_amd64.zip
 RUN dnf -y install dnf-plugins-core && \
     dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo && \
