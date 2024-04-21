@@ -7,60 +7,60 @@ echo '# placeholder' >/etc/consul.d/consul.hcl
 
 touch /etc/consul.d/consul.env
 
-if test -f /etc/consul.d/consul.json ; then
+if test -f /etc/consul.d/consul.json; then
     exit 0
 elif hostname -a | grep -q server; then
     # Server configuration
     NOMAD_SERVER_KEY="$(cat /shared/nomad.key)"
     cat >/etc/consul.d/consul.json <<EOF
 {
-  "data_dir": "/opt/consul",
-  "server": true,
-  "bootstrap": true,
-  "encrypt": "$CONSUL_KEY",
-  "encrypt_verify_incoming": true,
-  "encrypt_verify_outgoing": true,
-  "acl": {
-    "tokens": {
-      "initial_management": "$(cat /shared/consul-agents.token)",
-      "default": "$(cat /shared/dns-requests.token)",
-      "agent": "$(cat /shared/consul-agents.token)"
+    "data_dir": "/opt/consul",
+    "server": true,
+    "bootstrap": true,
+    "encrypt": "$CONSUL_KEY",
+    "encrypt_verify_incoming": true,
+    "encrypt_verify_outgoing": true,
+    "acl": {
+        "tokens": {
+            "initial_management": "$(cat /shared/consul-agents.token)",
+            "default": "$(cat /shared/dns-requests.token)",
+            "agent": "$(cat /shared/consul-agents.token)"
+        }
+    },
+    "connect": {
+        "enabled": true
+    },
+    "client_addr": "0.0.0.0",
+    "ui_config": {
+        "enabled": true
     }
-  },
-  "connect": {
-    "enabled": true
-  },
-  "client_addr": "0.0.0.0",
-  "ui_config": {
-    "enabled": true
-  }
 }
 EOF
     cat >/etc/nomad.d/nomad.hcl <<EOF
 data_dir = "/opt/nomad/data"
 
 server {
-  enabled          = true
-  bootstrap_expect = 1
-  encrypt = "$NOMAD_SERVER_KEY"
+    enabled          = true
+    bootstrap_expect = 1
+    encrypt = "$NOMAD_SERVER_KEY"
 }
 datacenter = "dc1"
 
 consul {
-  # Set to true to be able to submit jobs via Nomad's UI
-  allow_unauthenticated = false
-  token = "$(cat /shared/nomad-server.token)"
+    # Set to true to be able to submit jobs via Nomad's UI
+    allow_unauthenticated = false
+    token = "$(cat /shared/nomad-server.token)"
 }
 
 ui {
-  enabled = true
-  consul {
-    ui_url = "http://localhost:8500/ui"
-  }
+    enabled = true
+    consul {
+        ui_url = "http://localhost:8500/ui"
+    }
 }
 
 acl {
-  enabled = true
+    enabled = true
 }
 EOF
 
@@ -88,26 +88,26 @@ backend api_back
     server-template traefik-api 1-10 _traefik-api._tcp.service.consul resolvers consul resolve-opts allow-dup-ip resolve-prefer ipv4 check
 
 resolvers consul
-     nameserver consul 127.0.0.1:8600
-     accepted_payload_size 8192
-     hold valid 5s
+    nameserver consul 127.0.0.1:8600
+    accepted_payload_size 8192
+    hold valid 5s
 EOF
 else
     # Client configuration
     cat >/etc/consul.d/consul.json <<EOF
 {
-  "data_dir": "/opt/consul",
-  "server": false,
-  "retry_join": ["server:8301"],
-  "encrypt": "$CONSUL_KEY",
-  "encrypt_verify_incoming": true,
-  "encrypt_verify_outgoing": true,
-  "acl": {
-    "tokens": {
-      "agent": "$(cat /shared/consul-agents.token)",
-      "default": "$(cat /shared/dns-requests.token)"
+    "data_dir": "/opt/consul",
+    "server": false,
+    "retry_join": ["server:8301"],
+    "encrypt": "$CONSUL_KEY",
+    "encrypt_verify_incoming": true,
+    "encrypt_verify_outgoing": true,
+    "acl": {
+        "tokens": {
+            "agent": "$(cat /shared/consul-agents.token)",
+            "default": "$(cat /shared/dns-requests.token)"
+        }
     }
-  }
 }
 EOF
 
@@ -115,36 +115,36 @@ EOF
 data_dir = "/opt/nomad/data"
 
 server {
-  enabled = false
+    enabled = false
 }
 datacenter = "dc1"
 
 client {
-  enabled = true
+    enabled = true
 }
 
 plugin {
-  config {
-    enabled = true
-  }
+    config {
+        enabled = true
+    }
 }
 
 consul {
-  allow_unauthenticated = false
-  token = "$(cat /shared/nomad-client.token)"
+    allow_unauthenticated = false
+    token = "$(cat /shared/nomad-client.token)"
 }
 
 acl {
-  enabled = true
+    enabled = true
 }
 EOF
 fi
 
 cat >/etc/consul.d/acl.hcl <<EOF
 acl = {
-  enabled = true
-  default_policy = "deny"
-  enable_token_persistence = true
+    enabled = true
+    default_policy = "deny"
+    enable_token_persistence = true
 }
 EOF
 

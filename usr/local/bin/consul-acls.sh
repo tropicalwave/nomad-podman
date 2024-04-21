@@ -2,7 +2,7 @@
 set -e
 set -u
 
-if test -f /etc/consul.d/bootstrapped ; then
+if test -f /etc/consul.d/bootstrapped; then
     exit 0
 elif hostname -a | grep -q client; then
     cat >>~/.bashrc <<EOF
@@ -24,34 +24,34 @@ while true; do
 done
 
 consul acl policy create \
-  -name "nomad-server" \
-  -description "Nomad Server Policy" \
-  -rules @/etc/initial-acls/consul/nomad-server-policy.hcl >/dev/null
+    -name "nomad-server" \
+    -description "Nomad Server Policy" \
+    -rules @/etc/initial-acls/consul/nomad-server-policy.hcl >/dev/null
 
 consul acl policy create \
-  -name "nomad-client" \
-  -description "Nomad Client Policy" \
-  -rules @/etc/initial-acls/consul/nomad-client-policy.hcl >/dev/null
+    -name "nomad-client" \
+    -description "Nomad Client Policy" \
+    -rules @/etc/initial-acls/consul/nomad-client-policy.hcl >/dev/null
 
 consul acl policy create \
-  -name "dns-requests" \
-  -rules @/etc/initial-acls/consul/dns-request-policy.hcl >/dev/null
+    -name "dns-requests" \
+    -rules @/etc/initial-acls/consul/dns-request-policy.hcl >/dev/null
 
 consul acl token create \
-  -description "Nomad Server Token" \
-  -policy-name "nomad-server" \
-  -secret="$(cat /shared/nomad-server.token)" >/dev/null
+    -description "Nomad Server Token" \
+    -policy-name "nomad-server" \
+    -secret="$(cat /shared/nomad-server.token)" >/dev/null
 
 # Should be replaced by individual tokens per node in production
 consul acl token create \
-  -description "Nomad Client Token" \
-  -policy-name "nomad-client" \
-  -secret="$(cat /shared/nomad-client.token)" >/dev/null
+    -description "Nomad Client Token" \
+    -policy-name "nomad-client" \
+    -secret="$(cat /shared/nomad-client.token)" >/dev/null
 
 consul acl token create \
-  -description "Token for DNS Requests" \
-  -policy-name dns-requests \
-  -secret="$(cat /shared/dns-requests.token)" >/dev/null
+    -description "Token for DNS Requests" \
+    -policy-name dns-requests \
+    -secret="$(cat /shared/dns-requests.token)" >/dev/null
 
 cat >>~/.bashrc <<EOF
 

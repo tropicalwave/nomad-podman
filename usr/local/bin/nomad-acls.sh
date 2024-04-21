@@ -16,8 +16,8 @@ NOMAD_TOKEN="$(awk -F= '/Secret ID/ { print $2 }' <<<"$SECRETS" | tr -d " ")"
 export NOMAD_TOKEN
 
 nomad acl policy apply \
-  -description "Allow everything" \
-  anonymous \
-  /etc/initial-acls/nomad/allow-all.hcl
+    -description "Allow everything" \
+    anonymous \
+    /etc/initial-acls/nomad/allow-all.hcl
 
 echo "$NOMAD_TOKEN" >/etc/nomad.d/bootstrapped

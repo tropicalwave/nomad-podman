@@ -1,3 +1,5 @@
+#checkov:skip=CKV_DOCKER_3:runs unprivileged anyway (intended for test purposes)
+#checkov:skip=CKV_DOCKER_2:no useful health check for servers and clients
 FROM quay.io/podman/stable:v4.9.4
 ARG DRIVER_VERSION=0.5.2
 ENV PODMAN_DRIVER nomad-driver-podman_${DRIVER_VERSION}_linux_amd64.zip
